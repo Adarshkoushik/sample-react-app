@@ -39,18 +39,17 @@ object Build : BuildType({
         root(DslContext.settingsRoot)
     }
 
-    steps {
-        script {
-            name= "Install npm packages"
-            scriptContent= """ npm install"""
-        }
-
-        script {
-            name= "Run tests"
-            scriptContent= """ npm run verify"""
-        }
+    params {
+        param("MY_CONFIG_FILE", "/sample-react-app/package.json")
     }
 
+    steps {
+        step {
+            name = "Run My Build"
+            type = "my-build-runner"
+            param("configFile", "%MY_CONFIG_FILE%")
+        }
+    }
     triggers {
         vcs {
         }
